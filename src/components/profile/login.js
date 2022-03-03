@@ -10,7 +10,7 @@ export const Login = () => {
   // ]);
   const [newUser, setNewUser] = useState({});
   const [loginUser, setLoginUser] = useState({});
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const uuu = [
     {username: 'ellen_ripley', email: 'ellen_ripley', password: 'ellen_ripley', _id: '123'},
