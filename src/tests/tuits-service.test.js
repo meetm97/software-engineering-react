@@ -1,4 +1,4 @@
-import {createTuit, deleteTuit} from "../services/tuits-service.js";
+import {createTuit, deleteTuitByContent} from "../services/tuits-service.js";
 import {
   createUser,
   deleteUsersByUsername, findAllUsers,
@@ -14,21 +14,21 @@ describe('can create tuit with REST API', () => {
     email: 'foru@foru.com'
   };
   const tuit1 = {
-    "tuit" : "Hi i am meet"
+    tuit : 'Hi i am meet'
   };
 
   // setup test before running test
   beforeAll(() => {
     // remove any/all users to make sure we create it in the test
-    return deleteTuit(tuit1) && deleteUsersByUsername(foru1.username);
+    return deleteUsersByUsername(foru1.username) && deleteTuitByContent(tuit1.tuit);
   })
 
   // clean up after test runs
   afterAll(() => {
     // remove any data we created
-    return deleteTuit(tuit1) && deleteUsersByUsername(foru1.username);
+    return deleteUsersByUsername(foru1.username) && deleteTuitByContent(tuit1.tuit);
   })
-  
+
   test('can insert new tuits with REST API', async () => {
 
     // insert the user in the database
@@ -38,13 +38,10 @@ describe('can create tuit with REST API', () => {
     expect(newUser.username).toEqual(foru1.username);
     expect(newUser.password).toEqual(foru1.password);
     expect(newUser.email).toEqual(foru1.email);
-
+    
     // insert tuit in the database
     const newTuit = await createTuit(newUser._id,tuit1);
-
-    // verify inserted tuits properties match parameter tuit
     expect(newTuit.tuit).toEqual(tuit1.tuit);
-    expect(newTuit.tuit._id).toEqual(tuit1.tuit._id);
   });
 });
 
