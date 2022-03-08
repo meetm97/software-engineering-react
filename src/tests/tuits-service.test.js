@@ -1,4 +1,4 @@
-import {createTuit, deleteTuitByContent} from "../services/tuits-service.js";
+import {createTuit, deleteTuit, deleteTuitByContent} from "../services/tuits-service.js";
 import {
   createUser,
   deleteUsersByUsername, findAllUsers,
@@ -46,7 +46,37 @@ describe('can create tuit with REST API', () => {
 });
 
 describe('can delete tuit wtih REST API', () => {
-  // TODO: implement this
+  const foru1 = {
+    username: 'foru',
+    password: 'foru123',
+    email: 'foru@foru.com'
+  };
+  const tuit1 = {
+    tuit : 'Hi i am meet'
+  };
+  let dummyUser = "";
+  let newTuit = "";
+  // setup test before running test
+  beforeAll(async() => {
+    dummyUser = await createUser(foru1);
+    newTuit = await createTuit(dummyUser._id, tuit1);
+  })
+
+  // clean up after test runs
+  afterAll(() => {
+    // remove any data we created
+    deleteTuitByContent(tuit1.tuit);
+    return deleteUsersByUsername(foru1.username);
+  })
+
+  test('can delete users from REST API by username', async () => {
+    // delete a user by their username. Assumes user already exists
+    const status = await deleteTuitByContent(tuit1.tuit);
+
+    // verify we deleted at least one user by their username
+    expect(status.deletedCount).toBeGreaterThanOrEqual(1);
+  });
+
 });
 
 describe('can retrieve a tuit by their primary key with REST API', () => {
