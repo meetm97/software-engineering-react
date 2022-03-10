@@ -18,4 +18,4 @@ export function Tuits({tuits = [], deleteTuit}) {
   );
 }
 
-export default Tuit;
+export default Tuits;
