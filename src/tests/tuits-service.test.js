@@ -180,6 +180,5 @@ describe('retreiveAllTuits', () => {
       const tuitName = tuit1.find(tuitName => tuitName === tuit.tuit);
       expect(tuit.tuit).toEqual(tuitName);
   });
-  });
-
+ });
 });
