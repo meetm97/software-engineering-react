@@ -16,6 +16,7 @@ const MOCKED_TUITS = [
   {tuit: "charlie's tuit", postBy: "a789", _id: "bb789"}
 ];
 
+// test tuit list renders static tuit array
 test('tuit list renders static tuit array', () => {
   render(
     <HashRouter>
@@ -30,6 +31,7 @@ test('tuit list renders static tuit array', () => {
   expect(linkElementC).toBeInTheDocument();
 });
 
+//test tuit list renders async
 test('tuit list renders async', async () => {
   const tuits = await findAllTuits();
   render(

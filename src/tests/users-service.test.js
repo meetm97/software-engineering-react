@@ -2,10 +2,7 @@ import {
   createUser,
   deleteUsersByUsername, findAllUsers,
   findUserById
-} from "../services/users-service.js";
-import 'regenerator-runtime/runtime'; 
-import '@testing-library/jest-dom/extend-expect';
-
+} from "../services/users-service";
 
 describe('createUser', () => {
   // sample user to insert
@@ -118,7 +115,7 @@ describe('findAllUsers',  () => {
   // setup data before test
   beforeAll(() =>
     // insert several known users
-    usernames.map(username =>
+      usernames.map(username =>
       createUser({
         username,
         password: `${username}123`,
@@ -130,8 +127,8 @@ describe('findAllUsers',  () => {
   // clean up after ourselves
   afterAll(() =>
     // delete the users we inserted
-    usernames.map(username =>
-      deleteUsersByUsername(username)
+    Promise.all(usernames.map(username =>
+      deleteUsersByUsername(username))
     )
   );
 

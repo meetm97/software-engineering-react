@@ -13,6 +13,7 @@ const MOCKED_TUITS = [
   {tuit: "charlie's tuit", postBy: "a789", _id: "bb789"}
 ];
 
+//test tuit list renders mocked
 test('tuit list renders mocked', async () => {
     axios.get.mockImplementation(() =>
     Promise.resolve({ data: {tuits: MOCKED_TUITS} }));

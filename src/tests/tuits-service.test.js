@@ -6,20 +6,22 @@ import {
 } from "../services/users-service.js";
 import 'regenerator-runtime/runtime' 
 
-describe('can create tuit with REST API', () => {
-  
+describe('createTuit', () => {
+
+  // sample user to insert
   const foru1 = {
     username: 'foru',
     password: 'foru123',
     email: 'foru@foru.com'
   };
+  // sample tuit to insert
   const tuit1 = {
     tuit : 'Hi i am meet'
   };
 
   // setup test before running test
   beforeAll(() => {
-    // remove any/all users to make sure we create it in the test
+    // remove any/all users and tuits to make sure we create it in the test
     return deleteUsersByUsername(foru1.username) && deleteTuitByContent(tuit1.tuit);
   })
 
@@ -41,23 +43,30 @@ describe('can create tuit with REST API', () => {
     
     // insert tuit in the database
     const newTuit = await createTuit(newUser._id,tuit1);
+    // verify new tuit matches the parameter user
     expect(newTuit.tuit).toEqual(tuit1.tuit);
   });
 });
 
-describe('can delete tuit wtih REST API', () => {
+describe('deleteTuit', () => {
+
+   // sample user to insert
   const foru1 = {
     username: 'foru',
     password: 'foru123',
     email: 'foru@foru.com'
   };
+
+    // sample tuit to insert
   const tuit1 = {
     tuit : 'Hi i am meet'
   };
   let dummyUser = "";
   let newTuit = "";
+
   // setup test before running test
   beforeAll(async() => {
+    // creating users and tuit for the test
     dummyUser = await createUser(foru1);
     newTuit = await createTuit(dummyUser._id, tuit1);
   })
@@ -69,84 +78,108 @@ describe('can delete tuit wtih REST API', () => {
     return deleteUsersByUsername(foru1.username);
   })
 
-  test('can delete users from REST API by username', async () => {
-    // delete a user by their username. Assumes user already exists
+  test('can delete tuit withh REST API', async () => {
+    // delete a tuit by its content. Assumes tuit already exists
     const status = await deleteTuitByContent(tuit1.tuit);
 
-    // verify we deleted at least one user by their username
+    // verify we deleted at least one tuit by their content
     expect(status.deletedCount).toBeGreaterThanOrEqual(1);
   });
 
 });
 
-describe('can retrieve a tuit by their primary key with REST API', () => {
+describe('retrieveTuitByTuitId', () => {
+
+  // sample user to insert
   const foru1 = {
     username: 'foru',
     password: 'foru123',
     email: 'foru@foru.com'
   };
+
+  // sample tuit to insert
   const tuit1 = {
     tuit : 'Hi i am meet'
   };
   let dummyUser = "";
   let newTuit = "";
+  
+  // setup test before running test
   beforeAll(async() => {
+    // creating users and tuit for the test
     dummyUser = await createUser(foru1);
     newTuit = await createTuit(dummyUser._id, tuit1);
   })
-// clean up after test runs
-afterAll(() => {
-  // remove any data we created
-  deleteTuitByContent(tuit1.tuit);
-  return deleteUsersByUsername(foru1.username);
-})
-test('can retrieve a tuit by their primary key with REST API', async () => {
-  const existingTuit = await findTuitById(newTuit._id);
 
-  expect(existingTuit.tuit).toEqual(tuit1.tuit);
+
+  // clean up after test runs
+  afterAll(() => {
+    // remove any data we created
+    deleteTuitByContent(tuit1.tuit);
+    return deleteUsersByUsername(foru1.username);
+  })
+
+  test('can retrieve a tuit by their primary key with REST API', async () => {
+
+    // retrieve the tuit from the database by its primary key
+    const existingTuit = await findTuitById(newTuit._id);
+    
+    // verify retrieved tuit matches parameter user
+    expect(existingTuit.tuit).toEqual(tuit1.tuit);
+    });
 });
 
-});
+describe('retreiveAllTuits', () => {
 
-describe('can retrieve all tuits with REST API', () => {
+   // sample user to insert
   const foru1 = {
     username: 'foru',
     password: 'foru123',
     email: 'foru@foru.com'
   };
+
+  // sample tuit to insert
   const tuit1 = ["tuit1", "tuit2", "tuit3"]
-      // setup test before running test
-      let dummyUser = "";
-      beforeAll(async () => {
-        // remove any/all users to make sure we create it in the test
-        dummyUser = await createUser(foru1);
-        tuit1.map(tuit =>
-            createTuit(dummyUser._id,
-                {
-                    tuit: tuit,
-                })
-        )
-    })
-      // clean up after test runs
-      afterAll(() => {
-        // remove any data we created
-        tuit1.map(tuit =>
-          deleteTuitByContent(tuit)
-        )
-        return deleteUsersByUsername(foru1.username);
+      
+  let dummyUser = "";
+
+  // setup test before running test
+  beforeAll(async () => {
+    // creating multiple users and tuit
+    dummyUser = await createUser(foru1);
+    tuit1.map(tuit =>
+        createTuit(dummyUser._id,
+            {
+                tuit: tuit,
+            })
+    )
     })
 
-    test('can retrieve all tuits with REST API', async () => {
-      const allTuits = await findAllTuits();
+
+  // clean up after test runs
+  afterAll(() => {
+    // remove any data we created
+    tuit1.map(tuit =>
+      deleteTuitByContent(tuit)
+    )
+    return deleteUsersByUsername(foru1.username);
+})
+
+  test('can retrieve all tuits with REST API', async () => {
+
+    // retrieve all the tuits
+    const allTuits = await findAllTuits();
     
-      expect(allTuits.length).toBeGreaterThanOrEqual(tuit1.length);
-      const tuitsWeInserted = allTuits.filter(
-        tuit => tuit1.indexOf(tuit.tuit) >= 0);
-  
-      tuitsWeInserted.forEach(tuit => {
-        const tuitName = tuit1.find(tuitName => tuitName === tuit.tuit);
-        expect(tuit.tuit).toEqual(tuitName);
-    });
-    });
+    // let's check length of allTuits array in database with out tuit array database
+    expect(allTuits.length).toBeGreaterThanOrEqual(tuit1.length);
+    const tuitsWeInserted = allTuits.filter(
+      tuit => tuit1.indexOf(tuit.tuit) >= 0);
+    
+    // let's check each tuit in the database with the ones we sent
+    tuitsWeInserted.forEach(tuit => {
+      const tuitName = tuit1.find(tuitName => tuitName === tuit.tuit);
+      expect(tuit.tuit).toEqual(tuitName);
+  });
+  });
 
 });
