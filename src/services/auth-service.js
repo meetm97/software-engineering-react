@@ -1,5 +1,5 @@
 import axios from "axios";
-const BASE_URL = process.env.REACT_APP_BASE_URL
+const BASE_URL = "https://software-engineering-node-dev4.herokuapp.com"
 
 const AUTH_API = `${BASE_URL}/api/auth`
 
