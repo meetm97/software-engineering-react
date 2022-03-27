@@ -7,7 +7,7 @@ const api = axios.create({
    withCredentials: true
 });
 
-export const signup = (user) =>
+export const register = (user) =>
    api.post(`${AUTH_API}/signup`, user)
        .then(response => response.data);
 
