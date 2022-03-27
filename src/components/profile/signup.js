@@ -6,7 +6,7 @@ const Signup = () => {
     const [newUser, setNewUser] = useState({});
     const navigate = useNavigate();
     const signup = () =>
-        service.register(newUser)
+        service.signup(newUser)
             .then(() => navigate('/home'))
             .catch(e => alert(e));
     return (
