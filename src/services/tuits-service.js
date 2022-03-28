@@ -3,6 +3,10 @@ import axios from "axios";
 const TUITS_API = "https://software-engineering-node-dev4.herokuapp.com/api/tuits";
 const USERS_API = "https://software-engineering-node-dev4.herokuapp.com/api/users";
 
+const api = axios.create({
+    withCredentials: true
+});
+
 export const findAllTuits = () =>
     axios.get(TUITS_API)
         .then(response => response.data);
