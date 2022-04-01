@@ -45,7 +45,7 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit = () => {}}) => {
         <div className="col">
           <i className="far fa-inbox-out"></i>
         </div>
-      </div>
+    </div>
     );
 }
 export default TuitStats;
