@@ -4,6 +4,7 @@ import {HashRouter, Link, Route, Routes, useNavigate, useLocation} from "react-r
 import * as service from "../../services/auth-service"
 import TuitsAndReplies from "./tuits-and-replies";
 import Media from "./media";
+//import MyLikes from "./my-likes";
 const Profile = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -83,11 +84,11 @@ const Profile = () => {
                     className={`nav-link ${location.pathname.indexOf('media') >= 0 ? 'active':''}`}>
                 Media</Link>
             </li>
-            <li className="nav-item">
+            {/* <li className="nav-item">
               <Link to="/profile/likes"
                     className={`nav-link ${location.pathname.indexOf('likes') >= 0 ? 'active':''}`}>
                 Likes</Link>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>
