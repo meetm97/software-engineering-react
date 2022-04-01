@@ -1,5 +1,3 @@
-
-   
 import React from "react";
 
 const TuitStats = ({tuit, likeTuit, dislikeTuit = () => {}}) => {
@@ -16,25 +14,25 @@ const TuitStats = ({tuit, likeTuit, dislikeTuit = () => {}}) => {
             <div className="col">
           <span onClick={() => likeTuit(tuit)}>
               {
-                  tuit.stats && tuit.stats.likes && tuit.stats.likes > 0 &&
-                  <i className="fa-solid fa-thumbs-up" style={{color: 'red'}}></i>
+                  tuit.stats && tuit.stats.likes > 0 &&
+                  <i className="fa-solid fa-thumbs-up" style={{color: 'blue'}}></i>
               }
               {
-                  tuit.stats && tuit.stats.likes && tuit.stats.likes <= 0 &&
-                  <i className="fa-solid fa-thumbs-up"></i>
+                  tuit.stats && tuit.stats.likes <= 0 &&
+                  <i className="fa-solid fa-thumbs-up" style={{color: 'black'}}></i>
               }
               {tuit.stats && tuit.stats.likes}
           </span>
-        </div>
+            </div>
             <div className="col">
           <span onClick={() => dislikeTuit(tuit)}>
               {
-                  tuit.stats && tuit.stats.dislikes && tuit.stats.dislikes > 0 &&
-                  <i className="fa-solid fa-thumbs-down" style={{color: 'blue'}}></i>
+                  tuit.stats && tuit.stats.dislikes > 0 &&
+                  <i className="fa-solid fa-thumbs-down" style={{color: 'red'}}></i>
               }
               {
-                  tuit.stats && tuit.stats.dislikes && tuit.stats.dislikes <= 0 &&
-                  <i className="fa-solid fa-thumbs-down"></i>
+                  tuit.stats && tuit.stats.dislikes <= 0 &&
+                  <i className="fa-solid fa-thumbs-down" style={{color: 'black'}}></i>
               }
               {tuit.stats && tuit.stats.dislikes}
           </span>
